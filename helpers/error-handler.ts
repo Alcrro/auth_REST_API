@@ -21,7 +21,7 @@ export const errorHandler: ErrorRequestHandler = async (
     // Validation error
     if (err.name === "ValidationError") {
       res.status(400).json({ message: err.message || "Validation error" });
-    }
+    } // Validation error
   } catch (error) {
     // Generic error handler for other errors
     res.status(500).json({
@@ -29,6 +29,4 @@ export const errorHandler: ErrorRequestHandler = async (
       error: err.message || err,
     });
   }
-
-  
 };

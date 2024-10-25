@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import Category from "../../models/Category.model";
+import Category from "../../infrastructure/models/Category.model";
 
 //@desc					Get all Categories
 //@route 				GET

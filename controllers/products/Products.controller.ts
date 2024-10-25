@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import Product from "../../models/Product.model";
-import Category from "../../models/Category.model";
+import Product from "../../infrastructure/models/Product.model";
+import Category from "../../infrastructure/models/Category.model";
 import mongoose from "mongoose";
 
 //@desc					Get all products

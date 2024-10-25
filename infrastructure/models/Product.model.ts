@@ -1,5 +1,21 @@
 import mongoose, { mongo } from "mongoose";
 
+export interface iProductSchema {
+  name: string;
+  description: string;
+  image: string;
+  countInStock: number;
+  brand: string;
+  price: number;
+  richDescription: string;
+  images: string[];
+  category: string;
+  rating: number;
+  numbReviews: number;
+  isFeatured: boolean;
+  dateCrated: Date;
+}
+
 const ProductSchema = new mongoose.Schema({
   name: {
     type: String,

@@ -1,6 +1,16 @@
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
+export interface IUser {
+  _id: string;
+  id: string;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+  googleId?: string;
+  githubId?: string;
+}
+
+const UserSchema = new mongoose.Schema<IUser>({
   email: {
     type: String,
   },
@@ -11,10 +21,16 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  googleId: {
+    type: String,
+  },
+  githubId: {
+    type: String,
+  },
 });
 
 UserSchema.virtual("id").get(function () {
-  return this._id.toHexString();
+  return this._id.toString();
 });
 
 UserSchema.set("toJSON", {

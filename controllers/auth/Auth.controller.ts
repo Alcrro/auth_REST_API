@@ -1,8 +1,7 @@
 import bcrypt, { compare } from "bcryptjs";
 import { NextFunction, Request, Response } from "express";
-import User from "../../models/User.model";
+import User from "../../infrastructure/models/User.model";
 import { ErrorResponse } from "../../utils/errorResponse";
-import jwt from "jsonwebtoken";
 
 //@desc					Register user
 //@route 				POST
@@ -55,51 +54,28 @@ export async function loginUser(
   next: NextFunction
 ) {
   try {
-    const ipUser = req.ip;
-    console.log(ipUser);
+    const { login_type } = req.body;
+    console.log(login_type);
 
-    const { email, password } = req.body;
-    const user = await User.findOne({ email: req.body.email });
+    if (login_type === "credentials") {
+      return loginWithCredentials(req, res, next);
+    }
 
-    if (email === "" || password === "") {
-      return (
-        res
-          .status(400)
-          .json({ success: false, message: "Credentials are not correctly" }),
-        next()
-      );
-    }
-    if (!user) {
-      return (
-        res.status(400).json({ success: false, message: "The user not found" }),
-        next()
-      );
-    }
-    if (user && bcrypt.compareSync(req.body.password, user?.password!)) {
-      const secret = process.env.SECRET!;
-      const token = jwt.sign(
-        {
-          userId: user.id,
-          isAdmin: user.isAdmin,
-        },
-        secret,
-        {
-          expiresIn: "1d",
-        }
-      );
-      return (
-        res.status(200).json({
-          success: true,
-          message: "User Authenticated",
-          email: user.email,
-          token,
-        }),
-        next()
-      );
-    } else {
-      res.status(400).json({ success: false, message: "Password is wrong" });
-    }
+    res.status(404).json({ success: false, message: "something is bad!" });
   } catch (error) {
     res.status(500).json({ success: false, message: "Something is wrong!" });
   }
+}
+function loginWithCredentials(
+  req: Request<
+    import("express-serve-static-core").ParamsDictionary,
+    any,
+    any,
+    import("qs").ParsedQs,
+    Record<string, any>
+  >,
+  res: Response<any, Record<string, any>>,
+  next: NextFunction
+) {
+  throw new Error("Function not implemented.");
 }

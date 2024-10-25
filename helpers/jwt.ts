@@ -2,7 +2,7 @@ import { expressjwt } from "express-jwt";
 import { NextFunction, Request, Response } from "express";
 
 export const authJwt = () => {
-  const secret = process.env.SECRET!;
+  const secret = process.env.JWT_SECRET!;
   const api = process.env.API_URL!;
 
   return (req: Request, res: Response, next: NextFunction) => {
@@ -17,6 +17,13 @@ export const authJwt = () => {
         `${api}/register`,
         `${api}/categories`,
         `${api}/products`,
+        `${api}/profile`,
+        `${api}/auth/google`,
+        `${api}/auth/github`,
+        `${api}/auth/user`,
+        `${api}/auth/google/callback`,
+        `${api}/auth/github/callback`,
+
         `/favicon.ico`,
         { url: /\/api\/v1\/product(.*)/, methods: ["GET", "OPTIONS"] },
       ],
